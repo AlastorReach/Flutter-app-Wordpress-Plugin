@@ -132,6 +132,7 @@ class FA_Admin_Menus {
 						case 'TOTAL_AMOUNT_OF_NEWS_FOR_EACH_REQUEST_PER_CATEGORY': update_option('flutter_total_amount_of_news_per_request', intval($value));break;
 						case 'TOTAL_AMOUNT_OF_PAGES_PER_CATEGORY': update_option('flutter_max_number_of_pages_on_api_request', intval($value));break;
 						case 'FA_EN_VIVO_URL': update_option('flutter_envivo_url', $value);break;
+						case 'FA_EMAIL_FOR_NOTIFICATIONS': update_option('flutter_email_for_notifications', $value);break;
 					}
 				}
 			}
@@ -139,6 +140,7 @@ class FA_Admin_Menus {
 		}
 		
 		$firebase_api_key = get_option('flutter_firebase_api_key');
+		$email_for_notifications = get_option('flutter_email_for_notifications');
 		$send_push_notifications = get_option('flutter_send_push_notifications');
 		$amount_of_news_stored_in_database_per_category = get_option('flutter_total_amount_of_news_stored_in_database_per_category');
 		$amount_of_news_per_request = get_option('flutter_total_amount_of_news_per_request');
@@ -159,6 +161,20 @@ class FA_Admin_Menus {
 										'<tr>' .
 											'<td>' .
 												'<input type="text" style="width:100%" name="flutterapp_settings[FA_FIREBASE_API_KEY]" value="'.$firebase_api_key.'">' .
+											'</td>' .
+										'</tr>' .
+									'</tbody>' .
+								'</table>' .
+							'</td>' .
+						'</tr>' .
+						'<tr>' .
+							'<th>Email para alertar sobre notificaciones del comportamiento de FlutterApp</th>' .
+							'<td>' .
+								'<table class="widefat">' .
+									'<tbody>' .
+										'<tr>' .
+											'<td>' .
+												'<input type="text" style="width:100%" name="flutterapp_settings[FA_EMAIL_FOR_NOTIFICATIONS]" value="'.$email_for_notifications.'">' .
 											'</td>' .
 										'</tr>' .
 									'</tbody>' .

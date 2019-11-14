@@ -47,7 +47,7 @@ function handle_firebase_notification($object_id, $terms, $tt_ids, $taxonomy, $a
 				);
 				
 				
-				//$to = 
+				//$to = 'fPGv_CT3mFo:APA91bH_cWZC5u5VrzfjBafgvmUuA5_-nqqlGU8tL9wREc-NgMNjZjsfR-bBKRG87ur9ZkUimrPTWHyCMP5MGX-rbS9SmLAKwkchcCtjG-m_Q0DKY1MwegV6YxImrEQ_28L51RAs4pig';
 				$to = '/topics/generalNews';
 				
 				
@@ -59,40 +59,46 @@ function handle_firebase_notification($object_id, $terms, $tt_ids, $taxonomy, $a
 
 
 function sendPushNotification($to = "", $notification = array(), $data = array()) {
-	$apiKey = "FIREBASE_API_KEY";
-	$fields = array('to' => $to, 'notification' => $notification, 'data' => $data);
+	$firebaseServerKey = get_option('flutter_firebase_api_key');
 	
-	$headers = array('Authorization: key='.$apiKey, 'Content-Type: application/json');
+	if($firebaseServerKey){
+			$fields = array('to' => $to, 'notification' => $notification, 'data' => $data);
+			
+			$headers = array('Authorization: key='.$firebaseServerKey, 'Content-Type: application/json');
+			
+			$url = 'https://fcm.googleapis.com/fcm/send';
+			
+			$ch = curl_init();
+			curl_setopt($ch, CURLOPT_URL, $url);
+			curl_setopt($ch, CURLOPT_POST, true);
+			curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+			curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+			
+			curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+			curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($fields));
+			$response = curl_exec($ch);
+			$httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+			curl_close($ch);
+						
+			if ( is_wp_error( $response ) ) {
+				sendEmail($response->get_error_message());
+			}
 	
-	$url = 'https://fcm.googleapis.com/fcm/send';
-	
-	$ch = curl_init();
-	curl_setopt($ch, CURLOPT_URL, $url);
-	curl_setopt($ch, CURLOPT_POST, true);
-	curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
-	curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-	
-	curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
-	curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($fields));
-	$response = curl_exec($ch);
-	$httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-	curl_close($ch);
-				
-	if ( is_wp_error( $response ) ) {
-	   $error_message = $response->get_error_message();
-                $filename =  ABSPATH . "/temp/php-errors.log";
-                $fh = fopen($filename, "a");
-                fwrite($fh, "Mensaje de error: " . $error_message . "\n");
-                fclose($fh);
+	}
+	else{
+		$body = "La API KEY del servidor de Firebase está vacía, por favor avisar. Si está vacía, las notificaciones Push no llegarán a la aplicación móvil.";
+		sendEmail($body);
 	}
 	
 
 }
 
-function writeInLog($message, $value){
-	$filename =  ABSPATH . "/temp/php-errors.log";
-	$fh = fopen($filename, "a");
-	fwrite($fh, $message . $value . "\n");
-	fclose($fh);
+function sendEmail($body){
+	$to = get_option("flutter_email_for_notifications");
+		!empty($to) ? $to : get_option('admin_email');
+		$subject = "Nuevo mensaje desde Flutter App de WordPress";
+		$body = "La API KEY del servidor de Firebase está vacía, por favor avisar. Si está vacía, las notificaciones Push no llegarán a la aplicación móvil.";
+		$headers = array('Content-Type: text/plain; charset=UTF-8');
+		wp_mail($to, $subject, $body, $headers);
 }
 ?>

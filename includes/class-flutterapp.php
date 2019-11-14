@@ -67,6 +67,7 @@ final class FlutterApp {
 		add_option( 'flutter_total_amount_of_news_stored_in_database_per_category', 10, '', 'yes' );
 		add_option( 'flutter_total_amount_of_news_per_request', 10, '', 'yes' );
 		add_option( 'flutter_max_number_of_pages_on_api_request', 5, '', 'yes' );
+		add_option( 'flutter_email_for_notifications', '', '', 'yes' );
 		
 		register_activation_hook( __FILE__, array( 'FA_Custom_Database_Tables', 'FA_create_tables' ));
 		add_theme_support('post-thumbnails');
