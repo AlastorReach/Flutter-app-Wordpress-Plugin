@@ -47,7 +47,7 @@ function handle_firebase_notification($object_id, $terms, $tt_ids, $taxonomy, $a
 				);
 				
 				
-				//$to = 'fPGv_CT3mFo:APA91bH_cWZC5u5VrzfjBafgvmUuA5_-nqqlGU8tL9wREc-NgMNjZjsfR-bBKRG87ur9ZkUimrPTWHyCMP5MGX-rbS9SmLAKwkchcCtjG-m_Q0DKY1MwegV6YxImrEQ_28L51RAs4pig';
+				//$to = 
 				$to = '/topics/generalNews';
 				
 				
@@ -59,7 +59,7 @@ function handle_firebase_notification($object_id, $terms, $tt_ids, $taxonomy, $a
 
 
 function sendPushNotification($to = "", $notification = array(), $data = array()) {
-	$apiKey = "AAAAYtwO9ZA:APA91bFTXHQRVhtOuaEDv2_SARQPWUXINArHlrfMmv6uZoHoWj0ZnTie0jaKslxIKUG5g7ZFCPzG8xSrJTOCZzc255_miRY_utBkPikaW-YdKzK5Irk3M0AsDDE8e0HbowIThBnX0nND";
+	$apiKey = "FIREBASE_API_KEY";
 	$fields = array('to' => $to, 'notification' => $notification, 'data' => $data);
 	
 	$headers = array('Authorization: key='.$apiKey, 'Content-Type: application/json');
