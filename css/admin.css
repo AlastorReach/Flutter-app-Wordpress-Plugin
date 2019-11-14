@@ -1,0 +1,95 @@
+.alastor-switch {
+    position: relative;
+    display: inline-block;
+    width: 60px;
+    height: 34px;
+}
+
+.alastor-switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.alastor-slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    -webkit-transition: .4s;
+    transition: .4s;
+}
+
+.alastor-slider:before {
+    position: absolute;
+    content: "";
+    height: 26px;
+    width: 26px;
+    left: 4px;
+    bottom: 4px;
+    background-color: white;
+    -webkit-transition: .4s;
+    transition: .4s;
+}
+
+input:checked + .alastor-slider {
+    background-color: #2196F3;
+}
+
+input:focus + .alastor-slider {
+    box-shadow: 0 0 1px #2196F3;
+}
+
+input:checked + .alastor-slider:before {
+    -webkit-transform: translateX(26px);
+    -ms-transform: translateX(26px);
+    transform: translateX(26px);
+}
+
+/* Rounded sliders */
+.alastor-slider.alastor-round {
+    border-radius: 34px;
+}
+
+.alastor-slider.alastor-round:before {
+    border-radius: 50%;
+}
+
+.alastor-switch{
+	float:right
+}
+.alastor-category_name{
+    float:left;
+    font-size: 1rem;
+    font-weight: 100;
+}
+.alastor-category_item{
+    background-color: #eeeeee;
+	display:flex;
+    align-items:center;
+    justify-content: space-between;
+    border-radius: 20px;
+    padding-left: 10px;
+    margin-top: 10px;
+
+}
+
+
+
+.alastor-btn{
+    background-color: #2596f3;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 32px;
+    padding: 10px;
+    font-weight: 100;
+}
+
+.alastor-btn-container{
+    text-align: center;
+    margin-top: 30px;
+}
